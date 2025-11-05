@@ -1,0 +1,35 @@
+﻿@page "/employees"
+@inject EmployeeViewModel VM
+
+<MudTable Items="@VM.Employees.Take(4)"
+          Hover="true"
+          Breakpoint="Breakpoint.Sm"
+          Loading="@VM.Loading"
+          LoadingProgressColor="Color.Info">
+    <HeaderContent>
+        <MudTh>ID</MudTh>
+        <MudTh>Name</MudTh>
+        <MudTh>Department</MudTh>
+        <MudTh>Email</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="ID">@context.Id</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Department">@context.Department</MudTd>
+        <MudTd DataLabel="Email" HideSmall="VM.HideEmail">@context.Email</MudTd>
+    </RowTemplate>
+</MudTable>
+
+<MudSwitch @bind-Value="VM.HideEmail" Color="Color.Primary">
+    Hide <b>Email</b> when Breakpoint=Xs
+</MudSwitch>
+<MudSwitch @bind-Value="VM.Loading" Color="Color.Primary">
+    Show Loading
+</MudSwitch>
+
+@code {
+    protected override void OnInitialized()
+    {
+        VM.Load();
+    }
+}
